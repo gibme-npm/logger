@@ -1,11 +1,12 @@
-// Copyright (c) 2022 Brandon Lehmann
+// Copyright (c) 2018-2022 Brandon Lehmann
 //
 // Please see the included LICENSE file for more information.
 
-import { createLogger, format, Logger as WinstonLogger, transports } from 'winston';
+import Winston, { createLogger, format, Logger as WinstonLogger, transports } from 'winston';
 import { existsSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
 import * as dotenv from 'dotenv';
+export { transports, format, Winston };
 
 dotenv.config();
 
