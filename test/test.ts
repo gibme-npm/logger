@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2022, Brandon Lehmann <brandonlehmann@gmail.com>
+// Copyright (c) 2018-2023, Brandon Lehmann <brandonlehmann@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,20 +18,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import assert from 'assert';
+import * as assert from 'assert';
 import { it, describe } from 'mocha';
 import Logger from '../src/logger';
-import { existsSync } from 'fs';
-import { resolve } from 'path';
+import { existsSync, statSync } from 'fs';
 
 describe('Logger Tests', () => {
     it('Log path exists', () => {
-        assert(existsSync(Logger.path()));
+        assert.equal(existsSync(Logger.path()), true);
     });
 
     it('Creates file log', () => {
         Logger.debug('Test');
 
-        assert(existsSync(resolve(Logger.path(), Logger.defaultFilename())));
+        assert.equal(existsSync(Logger.defaultFilenamePath()), true);
+    });
+
+    describe('Disable Log File', () => {
+        let size = 0;
+
+        before(() => {
+            size = statSync(Logger.defaultFilenamePath()).size;
+        });
+
+        it('Verify Log File Size Does Not Increase', () => {
+            Logger.disableDefaultLog();
+
+            Logger.debug('Insert record');
+
+            const _size = statSync(Logger.defaultFilenamePath()).size;
+
+            assert.equal(size, _size);
+        });
     });
 });

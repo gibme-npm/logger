@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2022, Brandon Lehmann <brandonlehmann@gmail.com>
+// Copyright (c) 2018-2023, Brandon Lehmann <brandonlehmann@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,9 @@ import * as dotenv from 'dotenv';
 export { transports, format, Winston };
 
 dotenv.config();
+
+/** @ignore */
+const disableDefaultLog = process.env.LOG_DISABLE_DEFAULT?.toLowerCase() === 'true';
 
 /** @ignore */
 const LogPath = process.env.LOG_PATH ? resolve(process.env.LOG_PATH) : resolve(process.cwd(), 'logs/');
@@ -58,7 +61,18 @@ export interface ILogger extends WinstonLogger {
      * Returns the filename of the default log file
      */
     defaultFilename: () => string;
+    /**
+     * Returns the fully qualified default log file path
+     */
+    defaultFilenamePath: () => string;
+    /**
+     * Disables the default logging transport
+     */
+    disableDefaultLog: () => void;
 }
+
+/** @ignore */
+const defaultTransport = new transports.File({ filename: resolve(LogPath, LogFilename) });
 
 const _logger: ILogger = createLogger({
     level: 'info',
@@ -67,14 +81,18 @@ const _logger: ILogger = createLogger({
         format.splat(),
         format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
     ),
-    transports: [
-        new transports.File({ filename: resolve(LogPath, LogFilename) })
-    ]
+    transports: !disableDefaultLog ? [defaultTransport] : []
 }) as any;
+
+_logger.disableDefaultLog = () => {
+    _logger.remove(defaultTransport);
+};
 
 _logger.path = (): string => LogPath;
 
 _logger.defaultFilename = (): string => LogFilename;
+
+_logger.defaultFilenamePath = (): string => resolve(Logger.path(), Logger.defaultFilename());
 
 _logger.add(
     new transports.Console({
@@ -89,7 +107,7 @@ _logger.add(
 );
 
 _logger.addLog = (filename: string, level?: string, logPath = LogPath): void => {
-    Logger.add(
+    _logger.add(
         new transports.File({
             level,
             filename: resolve(logPath, filename)
