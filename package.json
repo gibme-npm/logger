@@ -1,6 +1,6 @@
 {
   "name": "@gibme/logger",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A simple wrapper around the Winston logger",
   "main": "dist/logger.js",
   "types": "dist/logger.d.ts",
@@ -38,8 +38,8 @@
     "email": "brandonlehmann@gmail.com"
   },
   "dependencies": {
-    "dotenv": "^16.4.1",
-    "winston": "^3.11.0"
+    "dotenv": "^16.4.5",
+    "winston": "^3.13.0"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
