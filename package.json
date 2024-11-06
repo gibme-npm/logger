@@ -1,6 +1,6 @@
 {
   "name": "@gibme/logger",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A simple wrapper around the Winston logger",
   "main": "dist/logger.js",
   "types": "dist/logger.d.ts",
