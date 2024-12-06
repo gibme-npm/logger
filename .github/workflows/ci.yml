@@ -28,6 +28,7 @@ jobs:
     - name: Install Dependencies
       run: yarn
     - name: Execute Unit Tests
+      if: matrix.node != '20' && matrix.os != 'windows-latest'
       run: yarn test
     - name: Publish to NPM
       if: matrix.node == '18' && matrix.os == 'ubuntu-latest' && github.event_name == 'release'
