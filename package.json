@@ -1,6 +1,6 @@
 {
   "name": "@gibme/logger",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "A simple wrapper around the Winston logger",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,7 +30,7 @@
   },
   "homepage": "https://gibme-npm.github.io/logger/",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "engineStrict": true,
   "author": {
@@ -54,7 +54,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "mocha": "^10.2.0",
     "ts-node": "^10.9.2",
-    "typedoc": "^0.25.7",
+    "typedoc": "^0.28.4",
     "typescript": "^5.8.3"
   }
 }
