@@ -1,9 +1,9 @@
 {
   "name": "@gibme/logger",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "A simple wrapper around the Winston logger",
-  "main": "dist/logger.js",
-  "types": "dist/logger.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/*"
   ],
@@ -38,12 +38,12 @@
     "email": "brandonlehmann@gmail.com"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "winston": "^3.13.1"
+    "dotenv": "^16.5.0",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.11.7",
+    "@types/node": "^22.15.17",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "eslint": "^8.56.0",
@@ -55,6 +55,6 @@
     "mocha": "^10.2.0",
     "ts-node": "^10.9.2",
     "typedoc": "^0.25.7",
-    "typescript": "^5.3.3"
+    "typescript": "^5.8.3"
   }
 }

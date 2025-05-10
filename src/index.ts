@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2023, Brandon Lehmann <brandonlehmann@gmail.com>
+// Copyright (c) 2018-2025, Brandon Lehmann <brandonlehmann@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,10 @@
 import Winston, { createLogger, format, Logger as WinstonLogger, transports } from 'winston';
 import { existsSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
-import * as dotenv from 'dotenv';
-export { transports, format, Winston };
+import { config } from 'dotenv';
+export { Winston, transports, format };
 
-dotenv.config();
+config();
 
 /** @ignore */
 const disableDefaultLog = process.env.LOG_DISABLE_DEFAULT?.toLowerCase() === 'true';
