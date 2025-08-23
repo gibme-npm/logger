@@ -27,15 +27,13 @@ export { Winston, transports, format };
 config();
 
 /** @ignore */
-const disableDefaultLog = process.env.LOG_DISABLE_DEFAULT?.toLowerCase() === 'true';
+const enableDefaultLog = process.env.ENABLE_DEFAULT_LOG?.toLowerCase() === 'true';
 
 /** @ignore */
 const LogPath = process.env.LOG_PATH ? resolve(process.env.LOG_PATH) : resolve(process.cwd(), 'logs/');
 
 /** @ignore */
-const LogFilename = process.env.LOG_FILENAME && process.env.LOG_FILENAME.length !== 0
-    ? process.env.LOG_FILENAME
-    : 'info.log';
+const LogFilename = process.env.LOG_FILENAME ?? 'info.log';
 
 if (!process.env.LOG_CREATE_PATH || process.env.LOG_CREATE_PATH === 'true') {
     if (!existsSync(LogPath)) {
@@ -56,15 +54,19 @@ export interface ILogger extends WinstonLogger {
     /**
      * Returns the fully qualified default log path
      */
-    path: () => string;
+    path: Readonly<string>;
     /**
      * Returns the filename of the default log file
      */
-    defaultFilename: () => string;
+    defaultFilename: Readonly<string>;
     /**
      * Returns the fully qualified default log file path
      */
-    defaultFilenamePath: () => string;
+    defaultFilenamePath: Readonly<string>;
+    /**
+     * Enables the default logging transport
+     */
+    enableDefaultLog: () => void;
     /**
      * Disables the default logging transport
      */
@@ -79,20 +81,28 @@ const _logger: ILogger = createLogger({
     format: format.combine(
         format.timestamp(),
         format.splat(),
-        format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
+        format.printf(info => `${info.timestamp} ${info.level}: ${info.message}}`)
     ),
-    transports: !disableDefaultLog ? [defaultTransport] : []
+    transports: enableDefaultLog ? [defaultTransport] : []
 }) as any;
+
+const setProperty = (key: string, value: any): void => {
+    (_logger as any)[key] = value;
+};
+
+_logger.enableDefaultLog = () => {
+    _logger.add(defaultTransport);
+};
 
 _logger.disableDefaultLog = () => {
     _logger.remove(defaultTransport);
 };
 
-_logger.path = (): string => LogPath;
+setProperty('path', LogPath);
 
-_logger.defaultFilename = (): string => LogFilename;
+setProperty('defaultFilename', LogFilename);
 
-_logger.defaultFilenamePath = (): string => resolve(Logger.path(), Logger.defaultFilename());
+setProperty('defaultFilenamePath', resolve(_logger.path, _logger.defaultFilename));
 
 _logger.add(
     new transports.Console({

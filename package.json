@@ -1,6 +1,6 @@
 {
   "name": "@gibme/logger",
-  "version": "1.0.14",
+  "version": "20.0.0",
   "description": "A simple wrapper around the Winston logger",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,7 +30,7 @@
   },
   "homepage": "https://gibme-npm.github.io/logger/",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "engineStrict": true,
   "author": {
@@ -38,7 +38,7 @@
     "email": "brandonlehmann@gmail.com"
   },
   "dependencies": {
-    "dotenv": "^16.5.0",
+    "dotenv": "^17.2.1",
     "winston": "^3.17.0"
   },
   "devDependencies": {

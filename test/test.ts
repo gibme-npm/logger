@@ -25,20 +25,24 @@ import { existsSync, statSync } from 'fs';
 
 describe('Logger Tests', () => {
     it('Log path exists', () => {
-        assert.equal(existsSync(Logger.path()), true);
+        assert.equal(existsSync(Logger.path), true);
+    });
+
+    it('Enable Default Log', () => {
+        Logger.enableDefaultLog();
     });
 
     it('Creates file log', () => {
         Logger.debug('Test');
 
-        assert.equal(existsSync(Logger.defaultFilenamePath()), true);
+        assert.equal(existsSync(Logger.defaultFilenamePath), true);
     });
 
     describe('Disable Log File', () => {
         let size = 0;
 
         before(() => {
-            size = statSync(Logger.defaultFilenamePath()).size;
+            size = statSync(Logger.defaultFilenamePath).size;
         });
 
         it('Verify Log File Size Does Not Increase', () => {
@@ -46,7 +50,7 @@ describe('Logger Tests', () => {
 
             Logger.debug('Insert record');
 
-            const _size = statSync(Logger.defaultFilenamePath()).size;
+            const _size = statSync(Logger.defaultFilenamePath).size;
 
             assert.equal(size, _size);
         });
