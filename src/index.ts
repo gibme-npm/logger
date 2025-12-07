@@ -24,7 +24,7 @@ import { resolve } from 'path';
 import { config } from 'dotenv';
 export { Winston, transports, format };
 
-config();
+config({ quiet: true });
 
 /** @ignore */
 const enableDefaultLog = process.env.ENABLE_DEFAULT_LOG?.toLowerCase() === 'true';
