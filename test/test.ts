@@ -19,7 +19,7 @@
 // SOFTWARE.
 
 import assert from 'assert';
-import { it, describe } from 'mocha';
+import { it, describe, before } from 'node:test';
 import Logger from '../src';
 import { existsSync, statSync } from 'fs';
 

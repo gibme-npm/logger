@@ -2,15 +2,12 @@
   "compilerOptions": {
     "target": "es6",
     "lib": [
-      "es2017",
-      "dom",
-      "scripthost"
+      "es2024"
     ],
     "module": "commonjs",
     "declaration": true,
     "outDir": "./dist",
     "strict": true,
-    "downlevelIteration": true,
     "esModuleInterop": true,
     "sourceMap": true
   },
