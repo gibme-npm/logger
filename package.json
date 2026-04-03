@@ -1,6 +1,6 @@
 {
   "name": "@gibme/logger",
-  "version": "22.0.0",
+  "version": "22.0.1",
   "description": "A simple wrapper around the Winston logger",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -54,7 +54,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^7.2.1",
     "globals": "^17.4.0",
-    "tsx": "^4.19.4",
+    "tsx": "^4.21.0",
     "typedoc": "^0.28.18",
     "typescript": "^6.0.2"
   }
