@@ -23,6 +23,8 @@ import { it, describe, before } from 'node:test';
 import Logger from '../src';
 import { existsSync, statSync } from 'fs';
 
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 describe('Logger Tests', () => {
     it('Log path exists', () => {
         assert.equal(existsSync(Logger.path), true);
@@ -32,8 +34,11 @@ describe('Logger Tests', () => {
         Logger.enableDefaultLog();
     });
 
-    it('Creates file log', () => {
+    it('Creates file log', async () => {
         Logger.debug('Test');
+
+        // allow Winston file transport to flush to disk
+        await sleep(500);
 
         assert.equal(existsSync(Logger.defaultFilenamePath), true);
     });
@@ -41,14 +46,20 @@ describe('Logger Tests', () => {
     describe('Disable Log File', () => {
         let size = 0;
 
-        before(() => {
+        before(async () => {
+            // allow Winston file transport to flush to disk
+            await sleep(500);
+
             size = statSync(Logger.defaultFilenamePath).size;
         });
 
-        it('Verify Log File Size Does Not Increase', () => {
+        it('Verify Log File Size Does Not Increase', async () => {
             Logger.disableDefaultLog();
 
             Logger.debug('Insert record');
+
+            // allow time for any potential write
+            await sleep(500);
 
             const _size = statSync(Logger.defaultFilenamePath).size;
 
